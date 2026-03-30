@@ -4,46 +4,44 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
-group = 'jonghyeok'
-version = '0.0.1-SNAPSHOT'
-description = 'search-book'
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+    group = 'jonghyeok'
+    version = '0.0.1-SNAPSHOT'
+    description = 'search-book'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
     }
-}
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
     }
-}
 
-repositories {
-    mavenCentral()
-}
-
-ext {
-    set('springCloudVersion', "2025.0.1")
-}
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    repositories {
+        mavenCentral()
     }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+
+    bootJar.enabled = false
+    jar.enabled = false
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
