@@ -1,0 +1,27 @@
+spring:
+  config:
+    import: file:.env[.properties]
+
+  cloud:
+    openfeign:
+      client:
+        config:
+          naverClient:
+            connect-timeout: 3000
+            read-timeout: 5000
+            logger-level: FULL
+
+external:
+  naver:
+    url: https://openapi.naver.com
+    client-id: ${NAVER_CLIENT_ID}
+    client-secret: ${NAVER_CLIENT_SECRET}
+
+logging:
+  level:
+    com.library.client: DEBUG
+---
+spring:
+  config:
+    activate:
+      on-profile: test

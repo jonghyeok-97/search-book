@@ -1,1 +1,18 @@
-jar.enabled = true
+ext {
+    springCloudVersion = "2025.0.1"
+}
+
+subprojects {
+    jar.enabled = true
+
+    dependencies {
+        implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+        testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+        }
+    }
+}
