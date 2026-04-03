@@ -34,7 +34,7 @@ public class NaverClientConfiguration {
                 NaverErrorResponse errorResponse = objectMapper.readValue(body, NaverErrorResponse.class);
                 return new CoreApiException(errorResponse.errorMessage(), ErrorType.EXTERNAL_API_ERROR);
             } catch (IOException e) {
-                return new CoreApiException("Naver Error Response 역직렬화 중 에러", ErrorType.EXTERNAL_API_ERROR);
+                return new CoreApiException("Naver Error Response 역직렬화 중 에러", ErrorType.EXTERNAL_API_ERROR, e);
             }
         };
     }
