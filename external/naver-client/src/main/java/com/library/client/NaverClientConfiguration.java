@@ -18,8 +18,9 @@ import java.nio.charset.StandardCharsets;
 public class NaverClientConfiguration {
 
     @Bean
-    public RequestInterceptor naverClientInterceptor(@Value("${external.naver.client-id}") String clientId,
-                                                     @Value("${external.naver.client-secret}") String secretKey) {
+    public RequestInterceptor naverClientInterceptor(
+            @Value("${external.naver.client-id}") String clientId,
+            @Value("${external.naver.client-secret}") String secretKey) {
         return template -> {
             template.header("x-naver-client-id", clientId);
             template.header("x-naver-client-secret", secretKey);
@@ -34,6 +35,7 @@ public class NaverClientConfiguration {
                 NaverErrorResponse errorResponse = objectMapper.readValue(body, NaverErrorResponse.class);
                 return new CoreApiException(errorResponse.errorMessage(), ErrorType.EXTERNAL_API_ERROR);
             } catch (IOException e) {
+                log.error("[NaverClient.errorDecoder] JSON 역직렬화 오류: {} {}", methodKey, e.getMessage());
                 return new CoreApiException("Naver Error Response 역직렬화 중 에러", ErrorType.EXTERNAL_API_ERROR, e);
             }
         };

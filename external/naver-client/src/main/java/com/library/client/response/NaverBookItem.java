@@ -1,5 +1,7 @@
 package com.library.client.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public record NaverBookItem(
         String title,
         String link,
@@ -7,7 +9,8 @@ public record NaverBookItem(
         String author,
         String discount,
         String publisher,
-        String pubdate,
+        @JsonProperty("pubdate")
+        String pubDate,
         String isbn,
         String description
 ) {

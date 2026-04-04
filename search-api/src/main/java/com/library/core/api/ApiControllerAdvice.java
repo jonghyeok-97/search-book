@@ -18,12 +18,9 @@ public class ApiControllerAdvice {
         ErrorType errorType = e.getErrorType();
         LogLevel logLevel = errorType.getLogLevel();
         switch (logLevel) {
-            case ERROR:
-                log.error("CoreApiException: {}", e.getMessage(), e);
-            case WARN:
-                log.warn("CoreApiException: {}", e.getMessage(), e);
-            default:
-                log.info("CoreApiException: {}", e.getMessage(), e);
+            case ERROR -> log.error("CoreApiException: {}", e.getMessage(), e);
+            case WARN -> log.warn("CoreApiException: {}", e.getMessage(), e);
+            default -> log.info("CoreApiException: {}", e.getMessage(), e);
         }
         return ResponseEntity.status(errorType.getStatus().value())
                 .body(ApiResponse.fail(errorType.getMessage()));

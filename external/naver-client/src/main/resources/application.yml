@@ -25,3 +25,5 @@ spring:
   config:
     activate:
       on-profile: test
+
+external.naver.url: http://localhost:${wiremock.server.port}
