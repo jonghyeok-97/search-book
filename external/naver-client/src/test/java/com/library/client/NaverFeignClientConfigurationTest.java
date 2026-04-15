@@ -2,9 +2,7 @@ package com.library.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.library.client.error.NaverErrorResponse;
-import com.library.common.exception.CoreApiException;
-import com.library.common.exception.ErrorType;
+
 import feign.*;
 import feign.codec.ErrorDecoder;
 import org.junit.jupiter.api.BeforeEach;
@@ -78,10 +76,9 @@ class NaverFeignClientConfigurationTest {
         Exception exception = errorDecoder.decode("methodKey", response);
 
         // then
-        assertThat(exception).isInstanceOf(CoreApiException.class);
-        CoreApiException coreApiException = (CoreApiException) exception;
-        assertThat(coreApiException.getErrorType()).isEqualTo(ErrorType.EXTERNAL_API_ERROR);
-        assertThat(coreApiException.getMessage()).isEqualTo("미 인증");
+        assertThat(exception).isInstanceOf(NaverClientCallException.class);
+        NaverClientCallException callException = (NaverClientCallException) exception;
+        assertThat(callException.getMessage()).isEqualTo("미 인증");
     }
 
     @Test

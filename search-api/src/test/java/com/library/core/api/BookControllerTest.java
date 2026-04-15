@@ -1,7 +1,7 @@
 package com.library.core.api;
 
-import com.library.common.exception.CoreApiException;
-import com.library.common.exception.ErrorType;
+import com.library.core.support.exception.CoreApiException;
+import com.library.core.support.exception.ErrorType;
 import com.library.core.domain.Book;
 import com.library.core.domain.BookSearchService;
 import com.library.core.support.Page;
@@ -43,13 +43,13 @@ class BookControllerTest {
                         .queryParam("sort", "sim"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("success"))
-                .andExpect(jsonPath("$.data[0].title").value("HTTP 완벽 가이드"));
+                .andExpect(jsonPath("$.data.content[0].title").value("HTTP 완벽 가이드"));
     }
 
     @Test
     void 외부_API_오류시_500_반환() throws Exception {
         given(bookSearchService.search(anyString(), anyInt(), anyInt(), anyString()))
-                .willThrow(new CoreApiException("외부 API 호출 에러입니다", ErrorType.EXTERNAL_API_ERROR));
+                .willThrow(new CoreApiException(ErrorType.EXTERNAL_API_ERROR));
 
         mockMvc.perform(get("/books")
                         .param("query", "HTTP")

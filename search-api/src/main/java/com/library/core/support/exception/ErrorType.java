@@ -1,4 +1,4 @@
-package com.library.common.exception;
+package com.library.core.support.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

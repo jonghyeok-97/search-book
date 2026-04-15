@@ -1,11 +1,11 @@
 package com.library.core.api;
 
-import com.library.common.response.ApiResponse;
+import com.library.core.support.response.ApiResponse;
 import com.library.core.api.response.BookResponse;
 import com.library.core.domain.Book;
 import com.library.core.domain.BookSearchService;
 import com.library.core.support.Page;
-import com.library.core.support.PageResponse;
+import com.library.core.support.response.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

@@ -1,9 +1,7 @@
 package com.library.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.library.client.error.NaverErrorResponse;
-import com.library.common.exception.CoreApiException;
-import com.library.common.exception.ErrorType;
+
 import feign.RequestInterceptor;
 import feign.Retryer;
 import feign.codec.ErrorDecoder;
@@ -33,10 +31,10 @@ public class NaverFeignClientConfiguration {
             try {
                 String body = new String(response.body().asInputStream().readAllBytes(), StandardCharsets.UTF_8);
                 NaverErrorResponse errorResponse = objectMapper.readValue(body, NaverErrorResponse.class);
-                return new CoreApiException(errorResponse.errorMessage(), ErrorType.EXTERNAL_API_ERROR);
+                return new NaverClientCallException(errorResponse.errorMessage());
             } catch (IOException e) {
                 log.error("[NaverClient.errorDecoder] JSON 역직렬화 오류: {} {}", methodKey, e.getMessage());
-                return new CoreApiException("Naver Error Response 역직렬화 중 에러", ErrorType.EXTERNAL_API_ERROR, e);
+                return new NaverClientCallException("Naver Error Response 역직렬화 중 에러", e);
             }
         };
     }

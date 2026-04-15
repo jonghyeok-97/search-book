@@ -1,8 +1,8 @@
 package com.library.core.api;
 
-import com.library.common.exception.CoreApiException;
-import com.library.common.exception.ErrorType;
-import com.library.common.response.ApiResponse;
+import com.library.core.support.exception.CoreApiException;
+import com.library.core.support.exception.ErrorType;
+import com.library.core.support.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.http.ResponseEntity;
