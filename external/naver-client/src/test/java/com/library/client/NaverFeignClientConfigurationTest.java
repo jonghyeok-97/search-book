@@ -25,16 +25,16 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class NaverClientConfigurationTest {
+class NaverFeignClientConfigurationTest {
 
-    NaverClientConfiguration configuration;
+    NaverFeignClientConfiguration configuration;
 
     @Mock
     ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp() {
-        configuration = new NaverClientConfiguration();
+        configuration = new NaverFeignClientConfiguration();
     }
 
     @Test

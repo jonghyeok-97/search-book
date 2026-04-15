@@ -1,6 +1,6 @@
 spring:
   config:
-    import: file:.env[.properties]
+    import: optional:file:.env[.properties]
 
   cloud:
     openfeign:
@@ -25,5 +25,3 @@ spring:
   config:
     activate:
       on-profile: test
-
-external.naver.url: http://localhost:${wiremock.server.port}

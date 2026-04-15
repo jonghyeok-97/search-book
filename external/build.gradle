@@ -6,13 +6,7 @@ subprojects {
     jar.enabled = true
 
     dependencies {
+        implementation platform("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
         implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-        testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
-    }
-
-    dependencyManagement {
-        imports {
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
-        }
     }
 }

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-public class NaverClientConfiguration {
+public class NaverFeignClientConfiguration {
 
     @Bean
     public RequestInterceptor naverClientInterceptor(
