@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew :external:naver-client:test --tests \"com.library.client.NaverClientConfigurationTest\")",
+      "Bash(rm \"C:\\\\Users\\\\user\\\\source\\\\jonghyeok-lab\\\\search-book\\\\search-api\\\\src\\\\main\\\\java\\\\com\\\\library\\\\core\\\\support\\\\exception\\\\CoreApiException.java\")",
+      "Bash(rm \"C:\\\\Users\\\\user\\\\source\\\\jonghyeok-lab\\\\search-book\\\\search-api\\\\src\\\\main\\\\java\\\\com\\\\library\\\\core\\\\support\\\\exception\\\\ErrorType.java\")",
+      "Bash(./gradlew :common:compileJava :search-api:compileJava :naver-client:compileJava)",
+      "Bash(./gradlew :common:compileJava :search-api:compileJava :external:naver-client:compileJava)"
+    ]
+  }
+}

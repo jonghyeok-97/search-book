@@ -3,7 +3,7 @@ package com.library.core.api;
 import com.library.core.support.exception.CoreApiException;
 import com.library.core.support.exception.ErrorType;
 import com.library.core.domain.Book;
-import com.library.core.domain.BookSearchService;
+import com.library.core.domain.BookService;
 import com.library.core.support.Page;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +26,17 @@ class BookControllerTest {
     MockMvc mockMvc;
 
     @MockitoBean
-    BookSearchService bookSearchService;
+    BookService bookService;
 
     @Test
     void success_200_OK() throws Exception {
-        given(bookSearchService.search(anyString(), anyInt(), anyInt(), anyString()))
+        given(bookService.search(anyString(), anyInt(), anyInt(), anyString()))
                 .willReturn(Page.from(
                         10,
                         List.of(Book.create("HTTP 완벽 가이드", "데이빗 고울리", "20020101", "1234567890", "HTTP 설명서"))
                 ));
 
-        mockMvc.perform(get("/books")
+        mockMvc.perform(get("/v1/books")
                         .queryParam("query", "HTTP")
                         .queryParam("page", "1")
                         .queryParam("size", "10")
@@ -48,7 +48,7 @@ class BookControllerTest {
 
     @Test
     void 외부_API_오류시_500_반환() throws Exception {
-        given(bookSearchService.search(anyString(), anyInt(), anyInt(), anyString()))
+        given(bookService.search(anyString(), anyInt(), anyInt(), anyString()))
                 .willThrow(new CoreApiException(ErrorType.EXTERNAL_API_ERROR));
 
         mockMvc.perform(get("/books")

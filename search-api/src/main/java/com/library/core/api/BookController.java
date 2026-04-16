@@ -3,7 +3,7 @@ package com.library.core.api;
 import com.library.core.support.response.ApiResponse;
 import com.library.core.api.response.BookResponse;
 import com.library.core.domain.Book;
-import com.library.core.domain.BookSearchService;
+import com.library.core.domain.BookService;
 import com.library.core.support.Page;
 import com.library.core.support.response.PageResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class BookController {
-    private final BookSearchService bookSearchService;
+    private final BookService bookService;
 
-    @GetMapping("/books")
+    @GetMapping("/v1/books")
     public ApiResponse<PageResponse<BookResponse>> searchBooks(
             @RequestParam String query,
             @RequestParam int page,
             @RequestParam int size,
             @RequestParam String sort
     ) {
-        Page<Book> paged = bookSearchService.search(query, page, size, sort);
+        Page<Book> paged = bookService.search(query, page, size, sort);
         return ApiResponse.success(
                 PageResponse.from(
                         paged.total(),
