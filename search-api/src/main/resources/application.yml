@@ -1,3 +1,4 @@
 spring:
   config:
-    import: classpath:application-naver-client.yml
+    import:
+      - application-naver-client.yml

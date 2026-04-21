@@ -32,7 +32,7 @@ public class ApiResponse<T> {
         return response;
     }
 
-    enum Result {
+    public enum Result {
         SUCCESS, ERROR
     }
 

@@ -4,11 +4,14 @@ import com.library.core.domain.BookService;
 import com.library.core.support.Page;
 import com.library.core.support.exception.CoreApiException;
 import com.library.core.support.exception.ErrorType;
+import com.library.core.support.response.ApiResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
@@ -30,7 +33,7 @@ class BookControllerTest {
         given(bookService.search(anyString(), anyInt(), anyInt(), any()))
                 .willReturn(Page.from(
                         10,
-                        anyList()
+                        List.of()
                 ));
 
         mockMvc.perform(get("/v1/books")
@@ -39,8 +42,8 @@ class BookControllerTest {
                         .queryParam("size", "10")
                         .queryParam("sort", "SIM"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("success"))
-                .andExpect(jsonPath("$.data.content[0].title").value("HTTP 완벽 가이드"));
+                .andExpect(jsonPath("$.result").value(ApiResponse.Result.SUCCESS.name()))
+                .andExpect(jsonPath("$.data").exists());
     }
 
     @Test
@@ -54,7 +57,7 @@ class BookControllerTest {
                         .param("size", "10")
                         .param("sort", "DATE"))
                 .andExpect(status().isInternalServerError())
-                .andExpect(jsonPath("$.message").value("외부 API 호출 에러입니다"));
+                .andExpect(jsonPath("$.error.message").value("외부 API 호출 에러입니다"));
     }
 
     @Test
@@ -65,6 +68,9 @@ class BookControllerTest {
                         .queryParam("size", "10")
                         .queryParam("sort", "SIM"))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("query는 필수 값입니다."));
+                .andExpect(jsonPath("$.result").value(ApiResponse.Result.ERROR.name()))
+                .andExpect(jsonPath("$.error.type").value(ErrorType.INVALID_PARAMETER.name()))
+                .andExpect(jsonPath("$.error.message").value(ErrorType.INVALID_PARAMETER.getMessage()))
+                .andExpect(jsonPath("$.error.description").value("query는 필수 값입니다."));
     }
 }
