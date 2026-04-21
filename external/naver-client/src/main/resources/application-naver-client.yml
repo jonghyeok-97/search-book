@@ -20,8 +20,14 @@ external:
 logging:
   level:
     com.library.client: DEBUG
+
 ---
 spring:
   config:
     activate:
       on-profile: test
+
+external:
+  naver:
+    client-id: test-client-id
+    client-secret: test-client-secret
