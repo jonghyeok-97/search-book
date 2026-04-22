@@ -24,6 +24,8 @@ EPIC: SB-0
 - SB-7: 검색 통계 기능 구현
 - SB-8: 문서화
 - SB-9: 고가용성 설계
+- SB-10: Docker 접목, MySQL 개발환경 구축
+- SB-11: db 모듈 분리
 
 # Self 고민 포인트 QnA
 - Q: external 모듈의 naver-client 와 kakao-client 를 패키지 or 모듈 분리?
