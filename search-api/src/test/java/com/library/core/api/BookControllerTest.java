@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -72,5 +73,19 @@ class BookControllerTest {
                 .andExpect(jsonPath("$.error.type").value(ErrorType.INVALID_PARAMETER.name()))
                 .andExpect(jsonPath("$.error.message").value(ErrorType.INVALID_PARAMETER.getMessage()))
                 .andExpect(jsonPath("$.error.description").value("query는 필수 값입니다."));
+    }
+
+    @Test
+    void 책_검색의_일일통계를_구한다() throws Exception {
+        given(bookService.findQueryStats(anyString(), any(LocalDate.class)))
+                .willReturn(3L);
+
+        mockMvc.perform(get("/v1/books/daily-stats")
+                        .queryParam("query", "HTTP")
+                        .queryParam("date", LocalDate.now().toString()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result").value(ApiResponse.Result.SUCCESS.name()))
+                .andExpect(jsonPath("$.data").value(3))
+                .andExpect(jsonPath("$.error").doesNotExist());
     }
 }

@@ -11,7 +11,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +33,11 @@ public class BookController {
                                 .toList()
                 )
         );
+    }
+
+    @GetMapping("/v1/books/daily-stats")
+    public ApiResponse<Long> dailyStats(@RequestParam String query, @RequestParam LocalDate date) {
+        return ApiResponse.success(bookService.findQueryStats(query, date));
     }
 
 }

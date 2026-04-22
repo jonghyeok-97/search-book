@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,6 +25,9 @@ class BookServiceTest extends IntegrationSupport {
     @MockitoBean
     DailyStatAppender dailyStatAppender;
 
+    @MockitoBean
+    DailyStatFinder dailyStatFinder;
+
     @Autowired
     BookService bookService;
 
@@ -37,7 +40,7 @@ class BookServiceTest extends IntegrationSupport {
         bookService.search(givenQuery, 1, 10, SortType.DATE);
 
         then(naverBookRepository).should().search(givenQuery, 1, 10, SortType.DATE);
-        verify(dailyStatAppender, times(1)).save(any(DailyStat.class));
+        then(dailyStatAppender).should().save(any(DailyStat.class));
     }
 
     @Test
@@ -60,5 +63,14 @@ class BookServiceTest extends IntegrationSupport {
                 Book.create("HTTP 동작 원리", "김영한", "20230402", "B1002", "설명"),
                 Book.create("HTTP 란?", "최배달", "20240402", "C1002", "설명")
         );
+    }
+
+    @Test
+    void 일일통계_구할_때_인자를_그대로_넘긴다() {
+        String givenQuery = "HTTP";
+        LocalDate givenDate = LocalDate.now();
+        bookService.findQueryStats(givenQuery, givenDate);
+
+        then(dailyStatFinder).should().readDailyCount(givenQuery, givenDate);
     }
 }

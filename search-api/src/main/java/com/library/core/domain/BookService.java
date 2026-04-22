@@ -7,6 +7,7 @@ import com.library.core.support.SortType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 public class BookService {
     private final NaverBookRepository naverBookRepository;
     private final DailyStatAppender dailyStatAppender;
+    private final DailyStatFinder dailyStatFinder;
 
     public Page<Book> search(String query, int page, int size, SortType sort) {
         Page<Book> search = naverBookRepository.search(query, page, size, sort);
@@ -21,5 +23,9 @@ public class BookService {
         dailyStatAppender.save(DailyStat.create(query, LocalDateTime.now()));
 
         return search;
+    }
+
+    public long findQueryStats(String query, LocalDate date) {
+        return dailyStatFinder.readDailyCount(query, date);
     }
 }
