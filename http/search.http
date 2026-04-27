@@ -1,4 +1,7 @@
 localhost:8080/v1/books?query=HTTP&page=1&size=10&sort=DATE
 
 ###
-localhost:8080/v1/books/daily-stats?query=TCP&date=2026-04-23
+localhost:8080/v1/books/stats/daily?query=TCP&date=2026-04-23
+
+###
+localhost:8080/v1/books/stats/query?start=2026-04-01&end=2026-04-27&size=5

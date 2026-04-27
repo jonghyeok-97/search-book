@@ -3,6 +3,7 @@ package com.library.core.api;
 import com.library.core.support.exception.CoreApiException;
 import com.library.core.support.exception.ErrorType;
 import com.library.core.support.response.ApiResponse;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.stream.Collectors;
@@ -36,6 +38,20 @@ public class ApiControllerAdvice {
     public ResponseEntity<ApiResponse<?>> handleNoResourceFoundException(NoResourceFoundException e) {
         log.warn("NoResourceFoundException: {}", e.getMessage());
         return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public ResponseEntity<?> handleHandlerMethodValidationException(HandlerMethodValidationException e) {
+        log.warn("HandlerMethodValidationException: {}", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.error(ErrorType.INVALID_PARAMETER, e.getMessage()));
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException e) {
+        log.warn("ConstraintViolationException: {}", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.error(ErrorType.INVALID_PARAMETER, e.getMessage()));
     }
 
     @ExceptionHandler(BindException.class)

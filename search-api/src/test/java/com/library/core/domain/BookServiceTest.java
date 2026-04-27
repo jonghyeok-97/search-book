@@ -73,4 +73,15 @@ class BookServiceTest extends IntegrationSupport {
 
         then(dailyStatFinder).should().readDailyCount(givenQuery, givenDate);
     }
+
+    @Test
+    void 상위쿼리_검색하면_인자를_그대로_넘긴다() {
+        LocalDate start = LocalDate.now();
+        LocalDate end = start.plusDays(1);
+        int size = 3;
+
+        bookService.findTopQueryStats(start, end, size);
+
+        verify(dailyStatFinder).findTopQuery(start, end, size);
+    }
 }

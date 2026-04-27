@@ -4,6 +4,7 @@ import com.library.core.repository.DailyStat;
 import com.library.core.repository.DailyStatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Component
+@Profile("default")
 public class ApplicationRunner implements CommandLineRunner {
     private final DailyStatRepository dailyStatRepository;
 

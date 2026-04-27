@@ -2,6 +2,7 @@ package com.library.core.domain;
 
 import com.library.core.repository.DailyStat;
 import com.library.core.repository.NaverBookRepository;
+import com.library.core.repository.QueryStat;
 import com.library.core.support.Page;
 import com.library.core.support.SortType;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,5 +29,9 @@ public class BookService {
 
     public long findQueryStats(String query, LocalDate date) {
         return dailyStatFinder.readDailyCount(query, date);
+    }
+
+    public List<QueryStat> findTopQueryStats(LocalDate start, LocalDate end, int size) {
+        return dailyStatFinder.findTopQuery(start, end, size);
     }
 }
