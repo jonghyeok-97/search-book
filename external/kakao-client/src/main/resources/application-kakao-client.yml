@@ -1,0 +1,29 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+
+  cloud:
+    openfeign:
+      client:
+        config:
+          kakaoClient:
+            connect-timeout: 3000
+            read-timeout: 5000
+            logger-level: FULL
+
+external:
+  kakao:
+    url: https://dapi.kakao.com
+    rest-api-key: KakaoAK ${KAKAO_CLIENT_API_KEY}
+
+logging:
+  level:
+    com.library.client: DEBUG
+
+---
+spring.config.activate.on-profile: test
+
+external:
+  kakao:
+    url: test-client-id
+    rest-api-key: test-api-key

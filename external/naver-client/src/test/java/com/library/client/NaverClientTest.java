@@ -1,37 +1,38 @@
 package com.library.client;
 
-import com.library.client.request.NaverBookSortType;
 import com.library.client.response.NaverBookResponse;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
-import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import static org.junit.jupiter.api.Assertions.*;
+@Disabled("로컬에서 환경변수 세팅 후 수동 실행")
+@ActiveProfiles("naver-client")
+@SpringBootTest(classes = NaverClientTest.Config.class)
+public class NaverClientTest {
 
-class NaverClientTest {
-
-    @Test
-    void searchBook() {
-        NaverClient naverClient = new NaverClient(new NaverClientStub());
-        NaverBookResponse response = naverClient.search("HTTP", 1, 10, NaverBookSortType.SIM);
-
-        assertAll(
-                () -> assertEquals(100L, response.total()),
-                () -> assertEquals(1L, response.start()),
-                () -> assertEquals(10L, response.display())
-        );
+    @EnableAutoConfiguration
+    static class Config {
     }
 
-    static class NaverClientStub implements NaverFeignClient {
-        @Override
-        public NaverBookResponse searchBook(String query, Integer display, Integer start, NaverBookSortType sort) {
-            return new NaverBookResponse(
-                    "2022-03-05T11:23:00",
-                    100L,
-                    1L,
-                    10L,
-                    List.of()
-            );
-        }
+    @Autowired
+    NaverClient naverClient;
+
+    @Test
+    void success_example() {
+        NaverBookResponse response = naverClient.searchBook("http", null, null, null);
+
+        assertThat(response).isNotNull();
+    }
+
+    @Test
+    void bad_request_example() {
+        assertThatThrownBy(() -> naverClient.searchBook(null, null, null, null))
+                .isInstanceOf(NaverClientCallException.class);
     }
 }

@@ -38,7 +38,7 @@ class NaverBookRepositoryTest {
 
     @Test
     void search() {
-        given(naverClient.search(anyString(), anyInt(), anyInt(), any(NaverBookSortType.class)))
+        given(naverClient.searchBook(anyString(), anyInt(), anyInt(), any(NaverBookSortType.class)))
                 .willReturn(new NaverBookResponse(
                         "", 10L, 1L, 10L, List.of()
                 ));
@@ -55,7 +55,7 @@ class NaverBookRepositoryTest {
 
     @Test
     void NaverCallException예외는_CoreApiException으로_래핑된다() {
-        given(naverClient.search(anyString(), anyInt(), anyInt(), any(NaverBookSortType.class)))
+        given(naverClient.searchBook(anyString(), anyInt(), anyInt(), any(NaverBookSortType.class)))
                 .willThrow(new NaverClientCallException("외부 API 호출 중 에러 발생"));
 
         assertThatThrownBy(() -> naverBookRepository.search("HTTP", 1, 10, SortType.DATE))

@@ -1,7 +1,7 @@
 package com.library.core.repository;
 
-import com.library.client.NaverClient;
 import com.library.client.NaverClientCallException;
+import com.library.client.NaverClient;
 import com.library.client.request.NaverBookSortType;
 import com.library.client.response.NaverBookResponse;
 import com.library.core.domain.Book;
@@ -19,7 +19,7 @@ public class NaverBookRepository {
 
     public Page<Book> search(String query, int page, int size, SortType sort) {
         try {
-            NaverBookResponse naverBookResponse = naverClient.search(query, page, size, NaverBookSortType.from(sort.name()));
+            NaverBookResponse naverBookResponse = naverClient.searchBook(query, page, size, NaverBookSortType.from(sort.name()));
 
             return Page.from(
                     naverBookResponse.total(),

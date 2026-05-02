@@ -2,15 +2,18 @@ package com.library.client;
 
 import com.library.client.request.NaverBookSortType;
 import com.library.client.response.NaverBookResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@Component
-@RequiredArgsConstructor
-public class NaverClient {
-    private final NaverFeignClient naverFeignClient;
+@FeignClient(name = "naverClient", url = "${external.naver.url}", configuration = NaverClientConfiguration.class)
+public interface NaverClient {
 
-    public NaverBookResponse search(String query, int page, int size, NaverBookSortType sort) {
-        return naverFeignClient.searchBook(query, page, size, sort);
-    }
+    @GetMapping("/v1/search/book.json")
+    NaverBookResponse searchBook(
+            @RequestParam String query,
+            @RequestParam(required = false) Integer display,
+            @RequestParam(required = false) Integer start,
+            @RequestParam(required = false) NaverBookSortType sort
+    );
 }

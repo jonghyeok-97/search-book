@@ -1,4 +1,4 @@
-package com.library.client;
+package com.library.client.response;
 
 public record NaverErrorResponse(
         String errorCode,

@@ -2,6 +2,7 @@ package com.library.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.library.client.response.NaverErrorResponse;
 import feign.RequestInterceptor;
 import feign.Retryer;
 import feign.codec.ErrorDecoder;
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-public class NaverFeignClientConfiguration {
+public class NaverClientConfiguration {
 
     @Bean
     public RequestInterceptor naverClientInterceptor(

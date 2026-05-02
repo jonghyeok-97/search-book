@@ -3,6 +3,7 @@ package com.library.client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.library.client.response.NaverErrorResponse;
 import feign.*;
 import feign.codec.ErrorDecoder;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,16 +24,16 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class NaverFeignClientConfigurationTest {
+class NaverClientConfigurationTest {
 
-    NaverFeignClientConfiguration configuration;
+    NaverClientConfiguration configuration;
 
     @Mock
     ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp() {
-        configuration = new NaverFeignClientConfiguration();
+        configuration = new NaverClientConfiguration();
     }
 
     @Test
